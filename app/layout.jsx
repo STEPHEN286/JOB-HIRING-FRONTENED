@@ -4,9 +4,9 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "Finate - Job Portal",
-  description: "Find your dream job with Finate job portal",
-    generator: 'v0.dev'
+  title: "Eitechgh - Job Portal",
+  description: "Find your dream job with Eitechgh job portal",
+    // generator: 'v0.dev'
 }
 
 export default function RootLayout({ children }) {
