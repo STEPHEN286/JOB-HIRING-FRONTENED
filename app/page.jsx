@@ -6,35 +6,33 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Header } from "@/components/header"
 import Link from "next/link"
+import JobCard from "@/components/job-card"
+import Footer from "@/components/footer"
 
 export default function HomePage() {
   const categories = [
-    { name: "Accounting/Finance", count: 305 },
-    { name: "Production/Operation", count: 95 },
-    { name: "Education/Training", count: 213 },
-    { name: "Design/Creative", count: 93 },
-    { name: "Health & Fitness", count: 6 },
-    { name: "Research/Consultancy", count: 14 },
-    { name: "Engineer/Architects", count: 176 },
-    { name: "Telecommunication", count: 405 },
-    { name: "Data Entry/Operator", count: 25 },
-    { name: "Marketing/Sale", count: 666 },
-    { name: "Security/Support Service", count: 62 },
+    { name: "Hotel Management", count: 120 },
+    { name: "Cleaning", count: 80 },
+    { name: "Reception", count: 60 },
+    { name: "Security", count: 40 },
+    { name: "Maintenance", count: 30 },
+    { name: "Cooking", count: 25 },
+    { name: "Other (Hotel)", count: 10 },
   ]
 
   const jobListings = [
     {
       id: 1,
-      company: "Accra Hostel Services",
+      company: "Accra Grand Hotel",
       location: "Accra, Ghana",
-      title: "Hostel Manager",
+      title: "Hotel Manager",
       type: "Full-time",
       skills: ["Management", "Customer Service", "Organization"],
       logo: "A",
     },
     {
       id: 2,
-      company: "Kumasi Comfort Homes",
+      company: "Kumasi Royal Hotel",
       location: "Kumasi, Ghana",
       title: "Cleaner",
       type: "Part-time",
@@ -43,7 +41,7 @@ export default function HomePage() {
     },
     {
       id: 3,
-      company: "Cape Coast Hostel",
+      company: "Cape Coast Beach Hotel",
       location: "Cape Coast, Ghana",
       title: "Receptionist",
       type: "Full-time",
@@ -52,7 +50,7 @@ export default function HomePage() {
     },
     {
       id: 4,
-      company: "Takoradi StayEasy",
+      company: "Takoradi StayEasy Hotel",
       location: "Takoradi, Ghana",
       title: "Cook",
       type: "Full-time",
@@ -61,7 +59,7 @@ export default function HomePage() {
     },
     {
       id: 5,
-      company: "Tamale Guest House",
+      company: "Tamale Guest Hotel",
       location: "Tamale, Ghana",
       title: "Security Officer",
       type: "Full-time",
@@ -70,7 +68,7 @@ export default function HomePage() {
     },
     {
       id: 6,
-      company: "Sunyani Hostel Hub",
+      company: "Sunyani Hotel Hub",
       location: "Sunyani, Ghana",
       title: "Maintenance Worker",
       type: "Full-time",
@@ -97,12 +95,12 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-black/60" />
 
         <div className="relative z-10 max-w-4xl mx-auto text-center px-2 sm:px-6">
-          <div className="text-green-400 text-2xl font-semibold mb-4">2,568 job available</div>
+          <div className="text-green-400 text-2xl font-semibold mb-4">2,568 hotel jobs available</div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight">
-            You can choose your dream job
+            Find your next hotel job in Ghana
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            Find great job for build your bright career. Have many job in this platform.
+            Discover great opportunities in the hotel industry. Apply for your dream hotel job today!
           </p>
 
           {/* Search Form */}
@@ -182,39 +180,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {jobListings.map((job) => (
-              <Card key={job.id} className="bg-white hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                      {job.logo}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900">{job.company}</h3>
-                      <p className="text-sm text-gray-500">{job.location}</p>
-                    </div>
-                  </div>
-
-                  <h4 className="text-lg font-semibold text-gray-900 mb-3">{job.title}</h4>
-
-                  <Badge
-                    className={`mb-4 ${
-                      job.type === "Full-time"
-                        ? "bg-green-100 text-green-800 border-green-200"
-                        : job.type === "Part-time"
-                          ? "bg-orange-100 text-orange-800 border-orange-200"
-                          : "bg-blue-100 text-blue-800 border-blue-200"
-                    }`}
-                  >
-                    {job.type}
-                  </Badge>
-
-                  <div className="text-sm text-gray-600 mb-4">{job.skills.join(", ")}</div>
-
-                  <div className="flex items-center justify-between">
-                    <Button className="bg-green-500 hover:bg-green-600 text-white">Apply Now</Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <JobCard key={job.id} job={job} />
             ))}
           </div>
 
@@ -253,79 +219,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">Finate</h3>
-              <p className="text-gray-400">Ghana's leading job portal for technology and innovation careers.</p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">For Job Seekers</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <Link href="/jobs" className="hover:text-white">
-                    Browse Jobs
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/dashboard" className="hover:text-white">
-                    My Applications
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/profile" className="hover:text-white">
-                    Profile
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">For Employers</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <Link href="/post-job" className="hover:text-white">
-                    Post a Job
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/candidates" className="hover:text-white">
-                    Browse Candidates
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/admin" className="hover:text-white">
-                    Employer Dashboard
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <Link href="/contact" className="hover:text-white">
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/help" className="hover:text-white">
-                    Help Center
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy" className="hover:text-white">
-                    Privacy Policy
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Finate. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

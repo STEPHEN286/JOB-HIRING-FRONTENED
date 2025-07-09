@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
 import { Mail, Phone, MapPin, Clock } from "lucide-react"
+import Footer from "@/components/footer"
 
 export default function ContactPage() {
   const { toast } = useToast()
@@ -185,6 +186,8 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

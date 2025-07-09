@@ -15,8 +15,8 @@ export function Header() {
     { href: "/", label: "Home" },
     { href: "/jobs", label: "Find Jobs" },
     { href: "/post-job", label: "Post Jobs" },
-    { href: "/candidates", label: "Candidates" },
-    { href: "/blog", label: "Blog" },
+    // { href: "/candidates", label: "Candidates" },
+    // { href: "/blog", label: "Blog" },
     { href: "/contact", label: "Contact" },
   ]
 

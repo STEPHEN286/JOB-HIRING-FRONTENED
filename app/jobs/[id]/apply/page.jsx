@@ -18,20 +18,13 @@ export default function JobApplicationPage() {
   const jobId = params.id
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    experience: "",
-    expectedSalary: "",
-    availableDate: "",
-    coverLetter: "",
-    resume: null,
-    portfolio: "",
+    name: "",
+    age: "",
+    locationAddress: "",
+    telephone: "",
+    socialSecurityNumber: "",
+    educationLevel: "",
+    positionAppliedFor: "",
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -51,10 +44,8 @@ export default function JobApplicationPage() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 2000))
-
     // Store application data in localStorage for demo
     const applicationData = {
       id: Date.now().toString(),
@@ -63,16 +54,13 @@ export default function JobApplicationPage() {
       appliedDate: new Date().toISOString(),
       status: "pending",
     }
-
     const existingApplications = JSON.parse(localStorage.getItem("applications") || "[]")
     existingApplications.push(applicationData)
     localStorage.setItem("applications", JSON.stringify(existingApplications))
-
     toast({
       title: "Application Submitted!",
-      description: "Your job application has been submitted successfully. You can track its status in your dashboard.",
+      description: "Your employment application has been submitted successfully.",
     })
-
     setIsSubmitting(false)
     router.push("/dashboard/applications")
   }
@@ -115,185 +103,55 @@ Portfolio: ${formData.portfolio}
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="max-w-2xl mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Apply for Job</h1>
-          <p className="text-gray-600">Fill out the form below to apply for this position</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Employment Application Form</h1>
+          <p className="text-gray-600">Please Complete The Form:</p>
         </div>
-
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Personal Information */}
           <Card>
             <CardHeader>
-              <CardTitle>Personal Information</CardTitle>
+              <CardTitle>Applicant Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
-                  <Input name="firstName" value={formData.firstName} onChange={handleInputChange} required />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
-                  <Input name="lastName" value={formData.lastName} onChange={handleInputChange} required />
-                </div>
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                  <Input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
-                  <Input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required />
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                <Input name="name" value={formData.name} onChange={handleInputChange} required />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                <Input name="address" value={formData.address} onChange={handleInputChange} />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Age *</label>
+                <Input name="age" value={formData.age} onChange={handleInputChange} required />
               </div>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
-                  <Input name="city" value={formData.city} onChange={handleInputChange} />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
-                  <Input name="state" value={formData.state} onChange={handleInputChange} />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Zip Code</label>
-                  <Input name="zipCode" value={formData.zipCode} onChange={handleInputChange} />
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Location Address *</label>
+                <Input name="locationAddress" value={formData.locationAddress} onChange={handleInputChange} required />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Telephone Number(s) *</label>
+                <Input name="telephone" value={formData.telephone} onChange={handleInputChange} required />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Social Security Number *</label>
+                <Input name="socialSecurityNumber" value={formData.socialSecurityNumber} onChange={handleInputChange} required />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Level Of Education *</label>
+                <Input name="educationLevel" value={formData.educationLevel} onChange={handleInputChange} required />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Position Applied For *</label>
+                <Input name="positionAppliedFor" value={formData.positionAppliedFor} onChange={handleInputChange} required />
+              </div>
+              <div className="flex items-center gap-4 mt-4">
+                <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-8" disabled={isSubmitting}>
+                  {isSubmitting ? "Submitting..." : "Submit Application"}
+                </Button>
+                <Button type="button" variant="outline" onClick={() => router.back()}>
+                  Cancel
+                </Button>
               </div>
             </CardContent>
           </Card>
-
-          {/* Professional Information */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Professional Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Years of Experience *</label>
-                  <Select
-                    value={formData.experience}
-                    onValueChange={(value) => setFormData((prev) => ({ ...prev, experience: value }))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select experience" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="0-1">0-1 years</SelectItem>
-                      <SelectItem value="2-3">2-3 years</SelectItem>
-                      <SelectItem value="4-5">4-5 years</SelectItem>
-                      <SelectItem value="6-10">6-10 years</SelectItem>
-                      <SelectItem value="10+">10+ years</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Expected Salary (Monthly)</label>
-                  <Input
-                    type="number"
-                    name="expectedSalary"
-                    value={formData.expectedSalary}
-                    onChange={handleInputChange}
-                    placeholder="5000"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Available Start Date</label>
-                <Input type="date" name="availableDate" value={formData.availableDate} onChange={handleInputChange} />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Portfolio/Website URL</label>
-                <Input
-                  type="url"
-                  name="portfolio"
-                  value={formData.portfolio}
-                  onChange={handleInputChange}
-                  placeholder="https://your-portfolio.com"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Resume Upload */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Resume & Documents</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Upload Resume *</label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                  <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <div className="text-sm text-gray-600 mb-2">
-                    {formData.resume ? formData.resume.name : "Click to upload or drag and drop"}
-                  </div>
-                  <div className="text-xs text-gray-500 mb-4">PDF, DOC, DOCX (Max 5MB)</div>
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    onChange={handleFileChange}
-                    className="hidden"
-                    id="resume-upload"
-                    required
-                  />
-                  <label htmlFor="resume-upload">
-                    <Button type="button" variant="outline" className="cursor-pointer bg-transparent">
-                      <FileText className="w-4 h-4 mr-2" />
-                      Choose File
-                    </Button>
-                  </label>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Cover Letter */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Cover Letter</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Cover Letter *</label>
-                <Textarea
-                  name="coverLetter"
-                  value={formData.coverLetter}
-                  onChange={handleInputChange}
-                  rows={6}
-                  placeholder="Tell us why you're interested in this position and what makes you a great fit..."
-                  required
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Submit Buttons */}
-          <div className="flex items-center gap-4">
-            <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-8" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Submit Application"}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={generateApplicationPDF}
-              className="flex items-center gap-2 bg-transparent"
-            >
-              <Download className="w-4 h-4" />
-              Download Application
-            </Button>
-            <Button type="button" variant="ghost" onClick={() => router.back()}>
-              Cancel
-            </Button>
-          </div>
         </form>
       </div>
     </div>

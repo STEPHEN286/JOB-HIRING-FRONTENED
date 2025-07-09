@@ -16,21 +16,21 @@ export default function JobDetailsPage() {
   // Mock job data - in real app, fetch from API
   const job = {
     id: jobId,
-    company: "Accra Hostel Services",
+    company: "Accra Grand Hotel",
     location: "Accra, Ghana",
-    title: "Hostel Manager",
+    title: "Hotel Manager",
     type: "Full-time",
     skills: ["Management", "Customer Service", "Organization"],
     logo: "A",
-    description: `Manage the daily operations of a busy hostel in Accra. Ensure guest satisfaction, supervise staff, and maintain facility standards.`,
+    description: `Manage the daily operations of a busy hotel in Accra. Ensure guest satisfaction, supervise staff, and maintain facility standards.`,
     requirements: [
-      "Experience in hospitality or hostel management",
+      "Experience in hospitality or hotel management",
       "Strong leadership and communication skills",
       "Ability to handle guest complaints professionally",
       "Organizational and multitasking abilities",
     ],
     responsibilities: [
-      "Oversee hostel staff and daily operations",
+      "Oversee hotel staff and daily operations",
       "Manage guest check-ins and check-outs",
       "Coordinate maintenance and cleaning schedules",
       "Ensure compliance with health and safety regulations",
@@ -44,10 +44,10 @@ export default function JobDetailsPage() {
     postedDate: "2024-01-15",
     applicationDeadline: "2024-02-15",
     companyInfo: {
-      size: "20-50 employees",
+      size: "50-100 employees",
       industry: "Hospitality",
       founded: "2010",
-      website: "https://accrahostel.com",
+      website: "https://accragrandhotel.com",
     },
   }
 

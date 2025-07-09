@@ -9,6 +9,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Header } from "@/components/header"
 import Link from "next/link"
+import JobCard from "@/components/job-card"
+import Footer from "@/components/footer"
 
 export default function JobsPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -19,75 +21,75 @@ export default function JobsPage() {
   const allJobs = [
     {
       id: 1,
-      company: "Accra Hostel Services",
+      company: "Accra Grand Hotel",
       location: "Accra, Ghana",
-      title: "Hostel Manager",
+      title: "Hotel Manager",
       type: "Full-time",
       skills: ["Management", "Customer Service", "Organization"],
       logo: "A",
-      description: "Oversee daily operations of a busy hostel in Accra, ensuring guest satisfaction and smooth facility management.",
+      description: "Oversee daily operations of a busy hotel in Accra, ensuring guest satisfaction and smooth facility management.",
       posted: "2 days ago",
-      category: "hostel",
+      category: "management",
     },
     {
       id: 2,
-      company: "Kumasi Comfort Homes",
+      company: "Kumasi Royal Hotel",
       location: "Kumasi, Ghana",
       title: "Cleaner",
       type: "Part-time",
       skills: ["Cleaning", "Attention to Detail", "Time Management"],
       logo: "K",
-      description: "Responsible for maintaining cleanliness and hygiene in hostel rooms and common areas.",
+      description: "Responsible for maintaining cleanliness and hygiene in hotel rooms and common areas.",
       posted: "1 day ago",
-      category: "hostel",
+      category: "cleaning",
     },
     {
       id: 3,
-      company: "Cape Coast Hostel",
+      company: "Cape Coast Beach Hotel",
       location: "Cape Coast, Ghana",
       title: "Receptionist",
       type: "Full-time",
       skills: ["Communication", "Front Desk", "Customer Service"],
       logo: "C",
-      description: "Greet guests, manage bookings, and provide information about hostel services and local attractions.",
+      description: "Greet guests, manage bookings, and provide information about hotel services and local attractions.",
       posted: "3 days ago",
-      category: "hostel",
+      category: "reception",
     },
     {
       id: 4,
-      company: "Takoradi StayEasy",
+      company: "Takoradi StayEasy Hotel",
       location: "Takoradi, Ghana",
       title: "Cook",
       type: "Full-time",
       skills: ["Cooking", "Menu Planning", "Food Safety"],
       logo: "T",
-      description: "Prepare daily meals for hostel guests, ensuring quality and hygiene standards are met.",
+      description: "Prepare daily meals for hotel guests, ensuring quality and hygiene standards are met.",
       posted: "1 week ago",
-      category: "hostel",
+      category: "cooking",
     },
     {
       id: 5,
-      company: "Tamale Guest House",
+      company: "Tamale Guest Hotel",
       location: "Tamale, Ghana",
       title: "Security Officer",
       type: "Full-time",
       skills: ["Security", "Surveillance", "Emergency Response"],
       logo: "T",
-      description: "Ensure the safety and security of hostel guests and property during assigned shifts.",
+      description: "Ensure the safety and security of hotel guests and property during assigned shifts.",
       posted: "4 days ago",
-      category: "hostel",
+      category: "security",
     },
     {
       id: 6,
-      company: "Sunyani Hostel Hub",
+      company: "Sunyani Hotel Hub",
       location: "Sunyani, Ghana",
       title: "Maintenance Worker",
       type: "Full-time",
       skills: ["Repairs", "Plumbing", "Electrical Work"],
       logo: "S",
-      description: "Handle routine maintenance and repairs for hostel facilities and equipment.",
+      description: "Handle routine maintenance and repairs for hotel facilities and equipment.",
       posted: "5 days ago",
-      category: "hostel",
+      category: "maintenance",
     },
   ]
 
@@ -164,11 +166,12 @@ export default function JobsPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all-categories">All Categories</SelectItem>
-                <SelectItem value="development">Development</SelectItem>
-                <SelectItem value="design">Design</SelectItem>
-                <SelectItem value="marketing">Marketing</SelectItem>
                 <SelectItem value="management">Management</SelectItem>
-                <SelectItem value="data">Data Science</SelectItem>
+                <SelectItem value="cleaning">Cleaning</SelectItem>
+                <SelectItem value="reception">Reception</SelectItem>
+                <SelectItem value="cooking">Cooking</SelectItem>
+                <SelectItem value="security">Security</SelectItem>
+                <SelectItem value="maintenance">Maintenance</SelectItem>
               </SelectContent>
             </Select>
 
@@ -224,62 +227,9 @@ export default function JobsPage() {
             </Select>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredJobs.map((job) => (
-              <Card key={job.id} className="bg-white hover:shadow-lg transition-shadow h-full">
-                <CardContent className="p-4 sm:p-6 flex flex-col h-full">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-2">
-                    {/* Company Logo and Info */}
-                    <div className="flex items-center gap-3 flex-shrink-0">
-                      <div className="w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg sm:text-xl">
-                        {job.logo}
-                      </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 truncate">{job.title}</h3>
-                        <Badge
-                          className={`text-xs sm:text-sm ${
-                            job.type === "Full-time"
-                              ? "bg-green-100 text-green-800 border-green-200"
-                              : job.type === "Part-time"
-                                ? "bg-orange-100 text-orange-800 border-orange-200"
-                                : job.type === "Contract"
-                                  ? "bg-purple-100 text-purple-800 border-purple-200"
-                                  : "bg-blue-100 text-blue-800 border-blue-200"
-                          }`}
-                        >
-                          {job.type}
-                        </Badge>
-                      </div>
-                      <p className="text-gray-600 font-medium text-xs sm:text-sm mb-1 truncate">{job.company}</p>
-                      <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-gray-500 mb-2">
-                        <div className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
-                          {job.location}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          {job.posted}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-gray-600 text-xs sm:text-sm mb-2 line-clamp-2 flex-1">{job.description}</p>
-                  <div className="flex flex-wrap gap-1 sm:gap-2 mt-auto">
-                    {job.skills.slice(0, 4).map((skill, index) => (
-                      <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
-                        {skill}
-                      </span>
-                    ))}
-                    {job.skills.length > 4 && (
-                      <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
-                        +{job.skills.length - 4} more
-                      </span>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+              <JobCard key={job.id} job={job} />
             ))}
           </div>
 
@@ -320,6 +270,8 @@ export default function JobsPage() {
           )}
         </div>
       </section>
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

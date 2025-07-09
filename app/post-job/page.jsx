@@ -9,26 +9,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Header } from "@/components/header"
 import { useToast } from "@/components/ui/use-toast"
+import Footer from "@/components/footer"
 
 export default function PostJobPage() {
   const router = useRouter()
   const { toast } = useToast()
 
   const [formData, setFormData] = useState({
-    title: "",
-    company: "",
+    hotelName: "",
     location: "",
-    type: "",
-    category: "",
-    salary: "",
-    description: "",
-    requirements: "",
-    responsibilities: "",
-    benefits: "",
-    applicationDeadline: "",
-    contactEmail: "",
-    companyWebsite: "",
-    skills: "",
+    contactNumber: "",
+    tinNumber: "",
+    address: "",
+    hotelCategory: "",
+    jobDescription: "",
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -41,11 +35,9 @@ export default function PostJobPage() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    // Store job data in localStorage for demo
+    // Store hotel job data in localStorage for demo
     const jobData = {
       id: Date.now().toString(),
       ...formData,
@@ -53,16 +45,13 @@ export default function PostJobPage() {
       status: "active",
       applicationsCount: 0,
     }
-
     const existingJobs = JSON.parse(localStorage.getItem("postedJobs") || "[]")
     existingJobs.push(jobData)
     localStorage.setItem("postedJobs", JSON.stringify(existingJobs))
-
     toast({
       title: "Job Posted Successfully!",
-      description: "Your job posting has been published and is now live.",
+      description: "Your hotel job posting has been published and is now live.",
     })
-
     setIsSubmitting(false)
     router.push("/admin/dashboard")
   }
@@ -78,199 +67,110 @@ export default function PostJobPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-          {/* Basic Information */}
           <Card>
             <CardHeader>
-              <CardTitle>Basic Information</CardTitle>
+              <CardTitle>Hotel Job Posting</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2 sm:space-y-4">
+            <CardContent className="space-y-4">
+              <div className="p-4 bg-yellow-100 border-l-4 border-yellow-400 text-yellow-800 rounded">
+                <strong>Notice:</strong> Yearly registration is <span className="font-bold">1000 Gh cedis</span> (subject to change).
+              </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">Job Title *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Hotel Name *</label>
                 <Input
-                  name="title"
-                  value={formData.title}
+                  name="hotelName"
+                  value={formData.hotelName}
                   onChange={handleInputChange}
-                  placeholder="e.g. Senior Frontend Developer"
+                  placeholder="e.g. Accra Grand Hotel"
                   required
                 />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Company Name *</label>
-                  <Input
-                    name="company"
-                    value={formData.company}
-                    onChange={handleInputChange}
-                    placeholder="Your Company Name"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Location *</label>
-                  <Input
-                    name="location"
-                    value={formData.location}
-                    onChange={handleInputChange}
-                    placeholder="e.g. New York, USA"
-                    required
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Job Type *</label>
-                  <Select
-                    value={formData.type}
-                    onValueChange={(value) => setFormData((prev) => ({ ...prev, type: value }))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select job type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Full-time">Full-time</SelectItem>
-                      <SelectItem value="Part-time">Part-time</SelectItem>
-                      <SelectItem value="Contract">Contract</SelectItem>
-                      <SelectItem value="Internship">Internship</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-                  <Select
-                    value={formData.category}
-                    onValueChange={(value) => setFormData((prev) => ({ ...prev, category: value }))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="hostel">Hostel</SelectItem>
-                      <SelectItem value="cleaning">Cleaning</SelectItem>
-                      <SelectItem value="security">Security</SelectItem>
-                      <SelectItem value="maintenance">Maintenance</SelectItem>
-                      <SelectItem value="reception">Reception</SelectItem>
-                      <SelectItem value="cooking">Cooking</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Job Details */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Job Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Job Description *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                <Input
+                  name="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  placeholder="e.g. Accra, Ghana"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number *</label>
+                <Input
+                  name="contactNumber"
+                  value={formData.contactNumber}
+                  onChange={handleInputChange}
+                  placeholder="e.g. 0241234567"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">TIN Number *</label>
+                <Input
+                  name="tinNumber"
+                  value={formData.tinNumber}
+                  onChange={handleInputChange}
+                  placeholder="e.g. C0001234567"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
+                <Input
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  placeholder="e.g. 123 Main St, Accra"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Hotel Category *</label>
+                <Select
+                  value={formData.hotelCategory}
+                  onValueChange={(value) => setFormData((prev) => ({ ...prev, hotelCategory: value }))}
+                  required
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select hotel category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1-star">1-Star</SelectItem>
+                    <SelectItem value="2-star">2-Star</SelectItem>
+                    <SelectItem value="3-star">3-Star</SelectItem>
+                    <SelectItem value="4-star">4-Star</SelectItem>
+                    <SelectItem value="5-star">5-Star</SelectItem>
+                    <SelectItem value="budget">Budget</SelectItem>
+                    <SelectItem value="boutique">Boutique</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Job Description *</label>
                 <Textarea
-                  name="description"
-                  value={formData.description}
+                  name="jobDescription"
+                  value={formData.jobDescription}
                   onChange={handleInputChange}
                   rows={6}
-                  placeholder="Provide a detailed description of the job role, what the candidate will be doing, and what your company does..."
+                  placeholder="Describe the job role, requirements, and any other relevant details."
                   required
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Requirements *</label>
-                <Textarea
-                  name="requirements"
-                  value={formData.requirements}
-                  onChange={handleInputChange}
-                  rows={5}
-                  placeholder="List the required qualifications, skills, experience, education, etc. (one per line)"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Key Responsibilities *</label>
-                <Textarea
-                  name="responsibilities"
-                  value={formData.responsibilities}
-                  onChange={handleInputChange}
-                  rows={5}
-                  placeholder="List the main responsibilities and duties for this role (one per line)"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Benefits & Perks</label>
-                <Textarea
-                  name="benefits"
-                  value={formData.benefits}
-                  onChange={handleInputChange}
-                  rows={4}
-                  placeholder="List the benefits, perks, and compensation details (one per line)"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Required Skills</label>
-                <Input
-                  name="skills"
-                  value={formData.skills}
-                  onChange={handleInputChange}
-                  placeholder="e.g. React, JavaScript, TypeScript, Node.js (comma separated)"
-                />
+              <div className="flex items-center gap-4 mt-4">
+                <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-8" disabled={isSubmitting}>
+                  {isSubmitting ? "Publishing..." : "Publish Job"}
+                </Button>
+                <Button type="button" variant="outline" onClick={() => router.back()}>
+                  Cancel
+                </Button>
               </div>
             </CardContent>
           </Card>
-
-          {/* Application Details */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Application Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Application Deadline</label>
-                  <Input
-                    type="date"
-                    name="applicationDeadline"
-                    value={formData.applicationDeadline}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Contact Email *</label>
-                  <Input
-                    type="email"
-                    name="contactEmail"
-                    value={formData.contactEmail}
-                    onChange={handleInputChange}
-                    placeholder="hr@company.com"
-                    required
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Company Website</label>
-                <Input
-                  type="url"
-                  name="companyWebsite"
-                  value={formData.companyWebsite}
-                  onChange={handleInputChange}
-                  placeholder="https://www.company.com"
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Submit Buttons */}
-          <div className="flex items-center gap-4">
-            <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-8" disabled={isSubmitting}>
-              {isSubmitting ? "Publishing..." : "Publish Job"}
-            </Button>
-            <Button type="button" variant="outline" onClick={() => router.back()}>
-              Cancel
-            </Button>
-          </div>
         </form>
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
