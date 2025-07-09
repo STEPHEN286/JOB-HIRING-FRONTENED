@@ -27,7 +27,7 @@ export function Header() {
           <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
             <span className="text-gray-900 font-bold text-sm">E</span>
           </div>
-          <span className="text-xl font-semibold">Eitechgh</span>
+          <span className="text-xl font-semibold">Eitegh</span>
         </Link>
 
         {/* Desktop Navigation */}

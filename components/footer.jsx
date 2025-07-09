@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 
 export default function Footer() {
@@ -53,7 +55,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Finate. All rights reserved.</p>
+          <p>&copy; 2024 eitegh. All rights reserved.</p>
         </div>
       </div>
     </footer>
