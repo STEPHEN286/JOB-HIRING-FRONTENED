@@ -369,7 +369,7 @@
     aria-hidden "^1.1.1"
     react-remove-scroll "^2.6.1"
 
-"@radix-ui/react-dialog@^1.1.1", "@radix-ui/react-dialog@^1.1.14", "@radix-ui/react-dialog@^1.1.2":
+"@radix-ui/react-dialog@^1.1.1", "@radix-ui/react-dialog@^1.1.2":
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-dialog/-/react-dialog-1.1.14.tgz#4c69c80c258bc6561398cfce055202ea11075107"
   integrity sha512-+CpweKjqpzTmwRwcYECQcNYbI8V9VSQt0SNFKeEBLgfucbsLssU6Ppq7wUdNXEGb573bMjFhVjKVll8rmV6zMw==
