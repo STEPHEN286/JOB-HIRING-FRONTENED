@@ -23,6 +23,9 @@ export default function PostJobPage() {
     address: "",
     hotelCategory: "",
     jobDescription: "",
+    minimumQualifications: "",
+    salary: "",
+    yearsOfExperience: "",
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -75,85 +78,122 @@ export default function PostJobPage() {
               <div className="p-4 bg-yellow-100 border-l-4 border-yellow-400 text-yellow-800 rounded">
                 <strong>Notice:</strong> Yearly registration is <span className="font-bold">1000 Gh cedis</span> (subject to change).
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Hotel Name *</label>
-                <Input
-                  name="hotelName"
-                  value={formData.hotelName}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Accra Grand Hotel"
-                  required
-                />
+              {/* Grid layout for main fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Hotel Name *</label>
+                  <Input
+                    name="hotelName"
+                    value={formData.hotelName}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Accra Grand Hotel"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                  <Input
+                    name="location"
+                    value={formData.location}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Accra, Ghana"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number *</label>
+                  <Input
+                    name="contactNumber"
+                    value={formData.contactNumber}
+                    onChange={handleInputChange}
+                    placeholder="e.g. 0241234567"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">TIN Number *</label>
+                  <Input
+                    name="tinNumber"
+                    value={formData.tinNumber}
+                    onChange={handleInputChange}
+                    placeholder="e.g. C0001234567"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
+                  <Input
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    placeholder="e.g. 123 Main St, Accra"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Hotel Category *</label>
+                  <Select
+                    value={formData.hotelCategory}
+                    onValueChange={(value) => setFormData((prev) => ({ ...prev, hotelCategory: value }))}
+                    required
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select hotel category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1-star">1-Star</SelectItem>
+                      <SelectItem value="2-star">2-Star</SelectItem>
+                      <SelectItem value="3-star">3-Star</SelectItem>
+                      <SelectItem value="4-star">4-Star</SelectItem>
+                      <SelectItem value="5-star">5-Star</SelectItem>
+                      <SelectItem value="budget">Budget</SelectItem>
+                      <SelectItem value="boutique">Boutique</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Salary *</label>
+                  <Input
+                    name="salary"
+                    value={formData.salary}
+                    onChange={handleInputChange}
+                    placeholder="e.g. 2000 GHS/month"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Years of Experience *</label>
+                  <Input
+                    name="yearsOfExperience"
+                    value={formData.yearsOfExperience}
+                    onChange={handleInputChange}
+                    placeholder="e.g. 3"
+                    type="number"
+                    min="0"
+                    required
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
-                <Input
-                  name="location"
-                  value={formData.location}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Accra, Ghana"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Contact Number *</label>
-                <Input
-                  name="contactNumber"
-                  value={formData.contactNumber}
-                  onChange={handleInputChange}
-                  placeholder="e.g. 0241234567"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">TIN Number *</label>
-                <Input
-                  name="tinNumber"
-                  value={formData.tinNumber}
-                  onChange={handleInputChange}
-                  placeholder="e.g. C0001234567"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
-                <Input
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  placeholder="e.g. 123 Main St, Accra"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Hotel Category *</label>
-                <Select
-                  value={formData.hotelCategory}
-                  onValueChange={(value) => setFormData((prev) => ({ ...prev, hotelCategory: value }))}
-                  required
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select hotel category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1-star">1-Star</SelectItem>
-                    <SelectItem value="2-star">2-Star</SelectItem>
-                    <SelectItem value="3-star">3-Star</SelectItem>
-                    <SelectItem value="4-star">4-Star</SelectItem>
-                    <SelectItem value="5-star">5-Star</SelectItem>
-                    <SelectItem value="budget">Budget</SelectItem>
-                    <SelectItem value="boutique">Boutique</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              {/* Textareas for job description and minimum qualifications */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Job Description *</label>
                 <Textarea
                   name="jobDescription"
                   value={formData.jobDescription}
                   onChange={handleInputChange}
-                  rows={6}
+                  rows={4}
                   placeholder="Describe the job role, requirements, and any other relevant details."
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Minimum Qualifications *</label>
+                <Textarea
+                  name="minimumQualifications"
+                  value={formData.minimumQualifications}
+                  onChange={handleInputChange}
+                  rows={3}
+                  placeholder="List the minimum qualifications required for this role."
                   required
                 />
               </div>

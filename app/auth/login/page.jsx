@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Header } from "@/components/header"
 import { useToast } from "@/components/ui/use-toast"
 import Link from "next/link"
+import Footer from "@/components/footer"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -112,6 +113,8 @@ export default function LoginPage() {
           </CardContent>
         </Card>
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

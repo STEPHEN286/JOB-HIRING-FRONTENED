@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Header } from "@/components/header"
 import { useToast } from "@/components/ui/use-toast"
+import Footer from "@/components/footer"
 
 export default function JobApplicationPage() {
   const params = useParams()
@@ -114,33 +115,36 @@ Portfolio: ${formData.portfolio}
               <CardTitle>Applicant Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
-                <Input name="name" value={formData.name} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Age *</label>
-                <Input name="age" value={formData.age} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Location Address *</label>
-                <Input name="locationAddress" value={formData.locationAddress} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Telephone Number(s) *</label>
-                <Input name="telephone" value={formData.telephone} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Social Security Number *</label>
-                <Input name="socialSecurityNumber" value={formData.socialSecurityNumber} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Level Of Education *</label>
-                <Input name="educationLevel" value={formData.educationLevel} onChange={handleInputChange} required />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Position Applied For *</label>
-                <Input name="positionAppliedFor" value={formData.positionAppliedFor} onChange={handleInputChange} required />
+              {/* Grid layout for main fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                  <Input name="name" value={formData.name} onChange={handleInputChange} required />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Age *</label>
+                  <Input name="age" value={formData.age} onChange={handleInputChange} required />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Location Address *</label>
+                  <Input name="locationAddress" value={formData.locationAddress} onChange={handleInputChange} required />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Telephone Number(s) *</label>
+                  <Input name="telephone" value={formData.telephone} onChange={handleInputChange} required />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Social Security Number *</label>
+                  <Input name="socialSecurityNumber" value={formData.socialSecurityNumber} onChange={handleInputChange} required />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Level Of Education *</label>
+                  <Input name="educationLevel" value={formData.educationLevel} onChange={handleInputChange} required />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Position Applied For *</label>
+                  <Input name="positionAppliedFor" value={formData.positionAppliedFor} onChange={handleInputChange} required />
+                </div>
               </div>
               <div className="flex items-center gap-4 mt-4">
                 <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white px-8" disabled={isSubmitting}>
@@ -154,6 +158,8 @@ Portfolio: ${formData.portfolio}
           </Card>
         </form>
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

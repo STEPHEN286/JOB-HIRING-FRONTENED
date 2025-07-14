@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Header } from "@/components/header"
 import { useToast } from "@/components/ui/use-toast"
 import Link from "next/link"
+import Footer from "@/components/footer"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -181,6 +182,8 @@ export default function RegisterPage() {
           </CardContent>
         </Card>
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
