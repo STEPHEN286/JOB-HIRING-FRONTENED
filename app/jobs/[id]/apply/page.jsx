@@ -26,6 +26,7 @@ export default function JobApplicationPage() {
     socialSecurityNumber: "",
     educationLevel: "",
     positionAppliedFor: "",
+    cv: null,
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -38,7 +39,7 @@ export default function JobApplicationPage() {
   const handleFileChange = (e) => {
     const file = e.target.files?.[0]
     if (file) {
-      setFormData((prev) => ({ ...prev, resume: file }))
+      setFormData((prev) => ({ ...prev, cv: file }))
     }
   }
 
@@ -144,6 +145,16 @@ Portfolio: ${formData.portfolio}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Position Applied For *</label>
                   <Input name="positionAppliedFor" value={formData.positionAppliedFor} onChange={handleInputChange} required />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Upload CV *</label>
+                  <Input
+                    type="file"
+                    accept=".pdf,.doc,.docx,.odt,.rtf,.txt"
+                    name="cv"
+                    onChange={handleFileChange}
+                    required
+                  />
                 </div>
               </div>
               <div className="flex items-center gap-4 mt-4">
