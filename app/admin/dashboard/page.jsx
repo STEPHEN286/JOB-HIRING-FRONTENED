@@ -1,307 +1,274 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Eye, Users, Briefcase, TrendingUp, MessageSquare, Download } from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import Badge from "@/components/ui/badge"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts"
+import { Briefcase, Users, Building2, Tags, TrendingUp, Calendar, MapPin, Bell, User, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Header } from "@/components/header"
-import Link from "next/link"
 
-export default function AdminDashboard() {
-  const [jobs, setJobs] = useState([])
-  const [applications, setApplications] = useState([])
+const statsData = [
+  {
+    title: "Total Jobs",
+    value: "1,247",
+    change: "+12% from last month",
+    icon: Briefcase,
+    iconBg: "bg-blue-600",
+  },
+  {
+    title: "Total Applicants",
+    value: "8,432",
+    change: "+23% from last month",
+    icon: Users,
+    iconBg: "bg-green-600",
+  },
+  {
+    title: "Companies",
+    value: "156",
+    change: "+5% from last month",
+    icon: Building2,
+    iconBg: "bg-purple-600",
+  },
+  {
+    title: "Categories",
+    value: "24",
+    change: "+2% from last month",
+    icon: Tags,
+    iconBg: "bg-yellow-500",
+  },
+]
 
-  useEffect(() => {
-    const storedJobs = JSON.parse(localStorage.getItem("postedJobs") || "[]")
-    const storedApplications = JSON.parse(localStorage.getItem("applications") || "[]")
+const applicationData = [
+  { month: "Jan", applications: 420 },
+  { month: "Feb", applications: 380 },
+  { month: "Mar", applications: 520 },
+  { month: "Apr", applications: 640 },
+  { month: "May", applications: 580 },
+  { month: "Jun", applications: 720 },
+]
 
-    // Update job application counts
-    const updatedJobs = storedJobs.map((job) => ({
-      ...job,
-      applicationsCount: storedApplications.filter((app) => app.jobId === job.id).length,
-    }))
+const jobStatusData = [
+  { name: "Active", value: 65, color: "#10b981" },
+  { name: "Closed", value: 25, color: "#f59e0b" },
+  { name: "Draft", value: 10, color: "#6b7280" },
+]
 
-    setJobs(updatedJobs)
-    setApplications(storedApplications)
-  }, [])
+const recentActivities = [
+  {
+    id: 1,
+    type: "application",
+    message: "New application for Senior Developer at TechCorp",
+    time: "2 minutes ago",
+    icon: Users,
+  },
+  {
+    id: 2,
+    type: "job",
+    message: "Marketing Manager position posted by StartupXYZ",
+    time: "1 hour ago",
+    icon: Briefcase,
+  },
+  {
+    id: 3,
+    type: "company",
+    message: "New company registration: InnovateLabs",
+    time: "3 hours ago",
+    icon: Building2,
+  },
+  {
+    id: 4,
+    type: "application",
+    message: "Application withdrawn for UX Designer role",
+    time: "5 hours ago",
+    icon: Users,
+  },
+]
 
-  const updateApplicationStatus = (applicationId, newStatus) => {
-    const updatedApplications = applications.map((app) =>
-      app.id === applicationId ? { ...app, status: newStatus } : app,
-    )
-    setApplications(updatedApplications)
-    localStorage.setItem("applications", JSON.stringify(updatedApplications))
-  }
+const topJobs = [
+  {
+    title: "Senior Full Stack Developer",
+    company: "TechCorp Solutions",
+    location: "Accra, Ghana",
+    applications: 45,
+    posted: "2 days ago",
+  },
+  {
+    title: "Marketing Manager",
+    company: "StartupXYZ",
+    location: "Kumasi, Ghana",
+    applications: 32,
+    posted: "1 week ago",
+  },
+  {
+    title: "UX/UI Designer",
+    company: "Creative Agency",
+    location: "Remote",
+    applications: 28,
+    posted: "1 week ago",
+  },
+  {
+    title: "Data Analyst",
+    company: "Analytics Pro",
+    location: "Tema, Ghana",
+    applications: 19,
+    posted: "2 weeks ago",
+  },
+]
 
-  const downloadApplicationData = () => {
-    const csvContent = [
-      ["Application ID", "Job ID", "Name", "Email", "Phone", "Applied Date", "Status"],
-      ...applications.map((app) => [
-        app.id,
-        app.jobId,
-        `${app.firstName} ${app.lastName}`,
-        app.email,
-        app.phone,
-        new Date(app.appliedDate).toLocaleDateString(),
-        app.status,
-      ]),
-    ]
-      .map((row) => row.join(","))
-      .join("\n")
-
-    const blob = new Blob([csvContent], { type: "text/csv" })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "applications-data.csv"
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-  }
-
-  const stats = {
-    totalJobs: jobs.length,
-    activeJobs: jobs.filter((job) => job.status === "active").length,
-    totalApplications: applications.length,
-    pendingApplications: applications.filter((app) => app.status === "pending").length,
-  }
-
+export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
-            <p className="text-gray-600">Manage your job postings and applications</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Button
-              onClick={downloadApplicationData}
-              variant="outline"
-              className="flex items-center gap-2 bg-transparent"
-            >
-              <Download className="w-4 h-4" />
-              Export Data
-            </Button>
-            <Link href="/post-job">
-              <Button className="bg-green-500 hover:bg-green-600 text-white">Post New Job</Button>
-            </Link>
-          </div>
-        </div>
-
+    <>
+      <div className="space-y-6">
         {/* Stats Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Total Jobs</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.totalJobs}</p>
-                </div>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Briefcase className="w-6 h-6 text-blue-600" />
-                </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {statsData.map((stat, index) => {
+            const IconComponent = stat.icon
+            return (
+              <Card key={index} className={`${stat.iconBg} border-gray-200 relative overflow-hidden`}>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-white">{stat.title}</CardTitle>
+                  <div className="absolute top-4 right-4 p-3 rounded-lg bg-white/20">
+                    <IconComponent className="h-8 w-8 text-white" />
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-white">{stat.value}</div>
+                  <p className="text-xs text-white/80">{stat.change}</p>
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+
+        {/* Charts Section */}
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
+          {/* Applications Chart */}
+          <Card className="col-span-4 bg-white border-gray-200 shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-800">Applications Overview</CardTitle>
+              <CardDescription className="text-gray-600">Monthly application trends</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={applicationData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis dataKey="month" stroke="#6b7280" />
+                  <YAxis stroke="#6b7280" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'white', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      color: '#374151'
+                    }}
+                  />
+                  <Bar dataKey="applications" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          {/* Job Status Chart */}
+          <Card className="col-span-3 bg-white border-gray-200 shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-800">Job Status</CardTitle>
+              <CardDescription className="text-gray-600">Distribution of job statuses</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={jobStatusData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {jobStatusData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'white', 
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      color: '#374151'
+                    }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Recent Activities and Top Jobs */}
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2   lg:grid-cols-7">
+          {/* Recent Activities */}
+          <Card className="col-span-4 w-full bg-white border-gray-200 shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-800">Recent Activities</CardTitle>
+              <CardDescription className="text-gray-600">Latest updates and notifications</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {recentActivities.map((activity) => {
+                  const IconComponent = activity.icon
+                  return (
+                    <div key={activity.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="p-2 rounded-lg bg-blue-100">
+                        <IconComponent className="h-4 w-4 text-blue-600" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-900">{activity.message}</p>
+                        <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </CardContent>
           </Card>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Active Jobs</p>
-                  <p className="text-2xl font-bold text-green-600">{stats.activeJobs}</p>
-                </div>
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-green-600" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Total Applications</p>
-                  <p className="text-2xl font-bold text-purple-600">{stats.totalApplications}</p>
-                </div>
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <Users className="w-6 h-6 text-purple-600" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Pending Reviews</p>
-                  <p className="text-2xl font-bold text-orange-600">{stats.pendingApplications}</p>
-                </div>
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <MessageSquare className="w-6 h-6 text-orange-600" />
-                </div>
+
+          {/* Top Jobs */}
+          <Card className="col-span-3 m-0 bg-white border-gray-200 shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-800">Top Performing Jobs</CardTitle>
+              <CardDescription className="text-gray-600">Jobs with most applications</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {topJobs.map((job, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-gray-900 truncate">{job.title}</h4>
+                        <p className="text-xs text-gray-600">{job.company}</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <MapPin className="h-3 w-3 text-gray-400" />
+                          <span className="text-xs text-gray-500">{job.location}</span>
+                        </div>
+                      </div>
+                      <Badge className="bg-blue-100 text-blue-800 border-blue-200 text-xs">
+                        {job.applications} apps
+                      </Badge>
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <span>Posted {job.posted}</span>
+                      <TrendingUp className="h-3 w-3 text-green-500" />
+                    </div>
+                    {index < topJobs.length - 1 && <hr className="border-gray-200" />}
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Main Content */}
-        <Tabs defaultValue="jobs" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="jobs">Job Postings</TabsTrigger>
-            <TabsTrigger value="applications">Applications</TabsTrigger>
-          </TabsList>
-
-          {/* Jobs Tab */}
-          <TabsContent value="jobs" className="mt-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Your Job Postings</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {jobs.length === 0 ? (
-                  <div className="text-center py-8">
-                    <div className="text-gray-400 mb-4">
-                      <Briefcase className="w-16 h-16 mx-auto" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">No jobs posted yet</h3>
-                    <p className="text-gray-600 mb-4">Start by posting your first job opening</p>
-                    <Link href="/post-job">
-                      <Button className="bg-green-500 hover:bg-green-600 text-white">Post Your First Job</Button>
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {jobs.map((job) => (
-                      <div key={job.id} className="border rounded-lg p-6 hover:shadow-md transition-shadow">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex-1">
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">{job.title}</h3>
-                            <p className="text-gray-600 mb-2">
-                              {job.company} • {job.location}
-                            </p>
-                            <div className="flex items-center gap-4 text-sm text-gray-500">
-                              <span>{job.type}</span>
-                              <span>{job.salary} monthly</span>
-                              <span>Posted: {new Date(job.postedDate).toLocaleDateString()}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <Badge variant={job.status === "active" ? "default" : "secondary"}>{job.status}</Badge>
-                            <div className="text-right">
-                              <div className="text-2xl font-bold text-gray-900">{job.applicationsCount}</div>
-                              <div className="text-sm text-gray-500">applications</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Button variant="outline" size="sm">
-                            <Eye className="w-4 h-4 mr-2" />
-                            View Details
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            Edit Job
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            View Applications ({job.applicationsCount})
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Applications Tab */}
-          <TabsContent value="applications" className="mt-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Applications</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {applications.length === 0 ? (
-                  <div className="text-center py-8">
-                    <div className="text-gray-400 mb-4">
-                      <Users className="w-16 h-16 mx-auto" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">No applications yet</h3>
-                    <p className="text-gray-600">Applications will appear here once candidates start applying</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {applications.slice(0, 10).map((application) => (
-                      <div key={application.id} className="border rounded-lg p-6 hover:shadow-md transition-shadow">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex-1">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                              {application.firstName} {application.lastName}
-                            </h3>
-                            <p className="text-gray-600 mb-2">{application.email}</p>
-                            <p className="text-sm text-gray-500">
-                              Applied: {new Date(application.appliedDate).toLocaleDateString()}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <Badge
-                              variant={application.status === "pending" ? "secondary" : "default"}
-                              className={
-                                application.status === "pending"
-                                  ? "bg-yellow-100 text-yellow-800"
-                                  : application.status === "accepted"
-                                    ? "bg-green-100 text-green-800"
-                                    : application.status === "rejected"
-                                      ? "bg-red-100 text-red-800"
-                                      : "bg-blue-100 text-blue-800"
-                              }
-                            >
-                              {application.status}
-                            </Badge>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Button variant="outline" size="sm">
-                            <Eye className="w-4 h-4 mr-2" />
-                            View Application
-                          </Button>
-                          {application.status === "pending" && (
-                            <>
-                              <Button
-                                size="sm"
-                                className="bg-green-500 hover:bg-green-600 text-white"
-                                onClick={() => updateApplicationStatus(application.id, "accepted")}
-                              >
-                                Accept
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="destructive"
-                                onClick={() => updateApplicationStatus(application.id, "rejected")}
-                              >
-                                Reject
-                              </Button>
-                            </>
-                          )}
-                          <Button variant="outline" size="sm">
-                            <MessageSquare className="w-4 h-4 mr-2" />
-                            Message
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+     
       </div>
-    </div>
+    </>
   )
 }
