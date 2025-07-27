@@ -37,7 +37,7 @@ export default function AppSidebar() {
   ]
 
   return (
-    <Sidebar className="!bg-blue-950 border-r border-blue-900" style={{ "--sidebar": "#0c1a2a" }}>
+    <Sidebar className=" border-r border-blue-900" style={{ "--sidebar": "#0c1a2a" }}>
     <SidebarHeader className="flex flex-col items-center gap-4 px-4 py-6">
       <Link href="#" className="flex items-center gap-2 font-semibold text-lg">
         <Package2 className="h-6 w-6 text-blue-600" />
@@ -49,13 +49,13 @@ export default function AppSidebar() {
       <SidebarGroup>
         {/* <SidebarGroupLabel>Navigation</SidebarGroupLabel> */}
         <SidebarGroupContent>
-          <SidebarMenu>
+          <SidebarMenu className="space-y-2">
             {navigationItems.map((item) => (
               <SidebarMenuItem key={item.name}>
-                <SidebarMenuButton asChild className="text-blue-100 hover:bg-blue-950/50 hover:text-blue-100 data-[active=true]:rounded-0 data-[active=true]:bg-blue-950/50 data-[active=true]:text-white" isActive={pathname === item.href}>
+                <SidebarMenuButton asChild className="text-blue-100 text-lg py-6 hover:bg-blue-950/50 hover:text-blue-100 data-[active=true]:rounded-0 data-[active=true]:bg-blue-950/50 data-[active=true]:text-white" isActive={pathname === item.href}>
                   <Link href={item.href}>
-                    <item.icon className="h-4 w-4 mr-2" />
-                    <span>{item.name}</span>
+                    <item.icon className="h-5 w-5 mr-2" />
+                    <span className="text-lg">{item.name}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
