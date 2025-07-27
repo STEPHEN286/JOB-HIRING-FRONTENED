@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import Badge from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts"
 import { Briefcase, Users, Building2, Tags, TrendingUp, Calendar, MapPin, Bell, User, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
